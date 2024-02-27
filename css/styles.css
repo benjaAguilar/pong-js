@@ -1,0 +1,57 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 99vw;
+    height: 97vh;
+}
+
+.gameboard{
+    display: grid;
+    grid-template-columns: repeat(48, 25px);
+    grid-template-rows: repeat(24, 25px);
+    width: 1200px;
+    height: 600px;
+    background-color: black;
+    padding: 1rem;
+}
+
+.ball{
+    grid-row: 12;
+    grid-column: 24;
+    background-color: red;
+}
+
+.playerLeft{
+    grid-row: 10 / 15;
+    grid-column: 3;
+    background-color: beige;
+}
+
+.playerRight{
+    grid-row: 10 / 15;
+    grid-column: 46;
+    background-color: beige;
+}
+
+.top-wall{
+    grid-column: 1 / 49;
+    background-color: beige;
+}
+
+.bottom-wall{
+    grid-column: -1 / -49;
+    grid-row: 24;
+    background-color: beige;
+}
+
+.left-goal-line{
+    grid-row: 2 / 24;
+    background-color: green;
+}
+
+.right-goal-line{
+    grid-row: -2 / -24;
+    grid-column: 48;
+    background-color: green;
+}
