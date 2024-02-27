@@ -1,6 +1,8 @@
 
 let pong = (function(){
 
+    const keyStates = {};
+
     //DOM
     let playerLeft = document.querySelector(".playerLeft");
     let playerRight = document.querySelector(".playerRight");
@@ -15,13 +17,13 @@ let pong = (function(){
             this.selector = selector;
         }
 
-        setPosition(e){
+        setPosition(key){
 
-            if(e.keyCode === this.codeUp && this.position[0] != 2){
+            if(key === this.codeUp && this.position[0] != 2){
                 this.position[0]--;
                 this.position[1]--;
 
-            } else if(e.keyCode === this.codeDown && this.position[1] != 24){
+            } else if(key === this.codeDown && this.position[1] != 24){
                 this.position[0]++;
                 this.position[1]++;
 
@@ -29,15 +31,37 @@ let pong = (function(){
 
             this.selector.style.gridRow = `${this.position[0]} / ${this.position[1]}`;
         }
+
+        checkMove(){
+            if(keyStates[this.codeUp]){
+                this.setPosition(this.codeUp);
+
+            }
+            if(keyStates[this.codeDown]){
+                this.setPosition(this.codeDown);
+
+            }
+        }
+
+        gameLoop = setInterval(() => {
+            this.checkMove();
+        }, 50);
+
     }
 
-    let playerL = new player([10, 15], 87, 83, playerLeft);
-    let playerR = new player([10, 15], 38, 40, playerRight);
+    let playerL = new player([10, 15], "KeyW", "KeyS", playerLeft);
+    let playerR = new player([10, 15], "ArrowUp", "ArrowDown", playerRight);
 
-    window.addEventListener("keydown", (event) => {
-        playerL.setPosition(event);
-        playerR.setPosition(event);
+    document.addEventListener("keydown", (event) => {
+        keyStates[event.code] = true;
+        
     });
+
+    document.addEventListener("keyup", (event) => {
+        keyStates[event.code] = false;
+        
+    });
+
 
 }());
 
