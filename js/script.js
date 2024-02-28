@@ -6,6 +6,7 @@ let pong = (function(){
     //DOM
     let playerLeft = document.querySelector(".playerLeft");
     let playerRight = document.querySelector(".playerRight");
+    let ballSelector = document.querySelector(".ball");
 
     //Player constructor
     class player{
@@ -49,8 +50,63 @@ let pong = (function(){
 
     }
 
+    class ball{
+
+        constructor(pos, selector, directionX, directionY){
+            this.ballPos = pos;
+            this.selector = selector;
+            this.directionX = directionX;
+            this.directionY = directionY;
+        }
+
+        moveBall(){
+
+            switch(this.directionX){
+                case "left":
+                    this.ballPos[1]--;
+                break;
+                case "right":
+                    this.ballPos[1]++;
+                break;
+            }
+            
+            switch(this.directionY){
+                case "up":
+                    this.ballPos[0]--;
+                break;
+                case "down":
+                    this.ballPos[0]++;
+                break;
+            }
+
+            if(this.ballPos[1] === 1){
+                this.directionX = "right";
+
+            } else if(this.ballPos[1] === 48){
+                this.directionX = "left";
+
+            }
+
+            if(this.ballPos[0] === 2){
+                this.directionY = "down";
+
+            } else if(this.ballPos[0] === 23){
+                this.directionY = "up";
+
+            }
+
+            this.selector.style.gridRow = this.ballPos[0];
+            this.selector.style.gridColumn = this.ballPos[1];
+        }
+
+        gameLoop = setInterval(() => {
+            this.moveBall();
+        }, 100);
+    }
+
     let playerL = new player([10, 15], "KeyW", "KeyS", playerLeft);
     let playerR = new player([10, 15], "ArrowUp", "ArrowDown", playerRight);
+    let gameBall = new ball([12, 24], ballSelector, "right", "down");
 
     document.addEventListener("keydown", (event) => {
         keyStates[event.code] = true;
