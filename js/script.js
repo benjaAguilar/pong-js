@@ -79,12 +79,18 @@ let pong = (function(){
                 break;
             }
 
-            if(this.ballPos[1] === 1){
+            this.selector.style.gridRow = this.ballPos[0];
+            this.selector.style.gridColumn = this.ballPos[1];
+        }
+
+        collide(){
+
+            if(this.ballPos[1] === 4 && playerL.position[0] <= this.ballPos[0] && this.ballPos[0] <= playerL.position[1]){
                 this.directionX = "right";
+            }
 
-            } else if(this.ballPos[1] === 48){
+            if(this.ballPos[1] === 45 && playerR.position[0] <= this.ballPos[0] && this.ballPos[0] <= playerR.position[1]){
                 this.directionX = "left";
-
             }
 
             if(this.ballPos[0] === 2){
@@ -95,12 +101,19 @@ let pong = (function(){
 
             }
 
-            this.selector.style.gridRow = this.ballPos[0];
-            this.selector.style.gridColumn = this.ballPos[1];
+            if(this.ballPos[1] === 1 || this.ballPos[1] === 48){
+                this.directionX = "";
+                this.directionY = "";
+                alert("GOAL");
+                location.reload();
+
+            }
+
         }
 
         gameLoop = setInterval(() => {
             this.moveBall();
+            this.collide();
         }, 100);
     }
 
