@@ -105,6 +105,7 @@ let pong = (function(){
                 this.directionX = "";
                 this.directionY = "";
                 alert("GOAL");
+                clearInterval(this.gameLoop);
                 location.reload();
 
             }
