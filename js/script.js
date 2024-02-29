@@ -2,6 +2,8 @@
 let pong = (function(){
 
     const keyStates = {};
+    let randomServeX = randomServe("x");
+    let randomServeY = randomServe("y"); 
 
     //DOM
     let playerLeft = document.querySelector(".playerLeft");
@@ -118,9 +120,35 @@ let pong = (function(){
         }, 100);
     }
 
+    function randomServe(direc){
+        let randomNum = Math.floor(Math.random() * 2);
+
+        if(direc === "x"){
+            switch(randomNum){
+                case 0:
+                    return "left";
+                break;
+                case 1:
+                    return "right";
+                break;
+            }
+
+        } else if(direc === "y"){
+            switch(randomNum){
+                case 0:
+                    return "up";
+                break;
+                case 1:
+                    return "down";
+                break;
+            }
+        }
+
+    }
+
     let playerL = new player([10, 15], "KeyW", "KeyS", playerLeft);
     let playerR = new player([10, 15], "ArrowUp", "ArrowDown", playerRight);
-    let gameBall = new ball([12, 24], ballSelector, "right", "down");
+    let gameBall = new ball([12, 24], ballSelector, randomServeX, randomServeY);
 
     document.addEventListener("keydown", (event) => {
         keyStates[event.code] = true;
